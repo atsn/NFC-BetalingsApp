@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Tilbudsapp;
@@ -9,11 +10,11 @@ namespace NFC_BetalingsApp
 {
     public class NFC_Chip : IWebUri
     {
-        public int Chipid { get; set; }
+        public string Chipid { get; set; }
         public int Konto { get; set; }
         public string Name { get; set; }
 
-        public NFC_Chip(int chipid, string name) : this()
+        public NFC_Chip(string chipid, string name) : this()
         {
             Konto = 0;
             Chipid = chipid;
@@ -31,7 +32,7 @@ namespace NFC_BetalingsApp
 
         public override string ToString()
         {
-            return $"{nameof(Name)}: {Name}, {nameof(Konto)}: {Konto}, {nameof(Chipid)}: {Chipid}";
+             return $"{nameof(Name)}: {Name}, {nameof(Konto)}: {Konto}, {nameof(Chipid)}: {Chipid}";
         }
     }
 }

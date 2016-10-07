@@ -36,8 +36,8 @@
                 <TextBlock x:Name="textBlock1_Copy" Margin="160,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="74" Text="Chip" HorizontalAlignment="Right"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="textBox" Margin="10,0,0,0" TextWrapping="Wrap" Text="{Binding amount, Mode=TwoWay}" FontSize="72" PlaceholderText="Amount" InputScope="CurrencyAmount" Width="400"/>
-                <TextBox x:Name="textBox1" Margin="40,0,0,0" TextWrapping="Wrap" Text="{Binding chipid, Mode=TwoWay, UpdateSourceTrigger=Default}" FontSize="72" PlaceholderText="Chip" Width="400"/>
+                <TextBox x:Name="textBox" Margin="10,0,0,0" TextWrapping="Wrap" Text="{Binding amount, Mode=TwoWay}" FontSize="50" PlaceholderText="Amount" InputScope="CurrencyAmount" Width="400"/>
+                <TextBox x:Name="textBox1" Margin="40,0,0,0" TextWrapping="Wrap" Text="{Binding chipid, Mode=TwoWay, UpdateSourceTrigger=Default}" FontSize="50" PlaceholderText="Chip" Width="400"/>
                 <Button x:Name="button" Content="Pay" HorizontalAlignment="Stretch" Margin="50,0,0,0" VerticalAlignment="Stretch" FontSize="72" Width="400">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">

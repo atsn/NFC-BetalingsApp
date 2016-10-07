@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml;
 
 namespace NFC_BetalingsApp
 {
     class Handler
     {
 
-        public static async Task<string> Pay(int Chipid, int amount)
+        public static async Task<string> Pay(string Chipid, int amount)
         {
             IEnumerable<NFC_Chip> Chips = null;
             try
@@ -29,7 +30,7 @@ namespace NFC_BetalingsApp
 
             foreach (var chip in Chips)
             {
-                if (chip.Chipid == Chipid)
+                if (String.Equals(chip.Chipid, Chipid, StringComparison.Ordinal))
                 {
                     if (chip.Konto >= amount)
                     {
@@ -46,7 +47,7 @@ namespace NFC_BetalingsApp
 
                         }
 
-                        return "Betalt: " + amount;
+                        return "Betalt: " + amount + "Konto: " + chip.Konto;
                     }
 
                     return "Ikke nok penge penge på chippen: " + chip.Konto;
@@ -56,7 +57,7 @@ namespace NFC_BetalingsApp
             return "Chippen findes ikke";
         }
 
-        public static async Task<string> ADDMoney(int Chipid, int amount)
+        public static async Task<string> ADDMoney(string Chipid, int amount)
         {
             IEnumerable<NFC_Chip> Chips = null;
             try
@@ -88,7 +89,7 @@ namespace NFC_BetalingsApp
                         return null;
 
                     }
-                    return "Penge tilføjet: " + amount +" total: " + chip.Konto;
+                    return "Penge tilføjet: " + amount + " total: " + chip.Konto;
                 }
             }
             return "Chippen findes ikke";
@@ -138,6 +139,8 @@ namespace NFC_BetalingsApp
                 ObservableCollection<NFC_Chip> returnchips = new ObservableCollection<NFC_Chip>();
                 foreach (var chip in Chips)
                 {
+                    chip.Name = chip.Name.Trim();
+                    chip.Chipid = chip.Chipid.Trim();
                     returnchips.Add(chip);
                 }
 

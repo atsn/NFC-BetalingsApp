@@ -18,7 +18,7 @@ namespace NFC_BetalingsApp
     {
         private string _response;
         private int _amount;
-        private int _chipid;
+        private string _chipid;
         private string _name;
         private bool _isRunning;
         public MediaElement Chaching = new MediaElement();
@@ -79,7 +79,7 @@ namespace NFC_BetalingsApp
             set { _amount = value; OnPropertyChanged(); }
         }
 
-        public int chipid
+        public string chipid
         {
             get { return _chipid; }
             set { _chipid = value; OnPropertyChanged(); }
@@ -98,28 +98,51 @@ namespace NFC_BetalingsApp
 
         public async void callpay()
         {
+
             IsRunning = true;
-            response = await Handler.Pay(chipid, amount);
-            IsRunning = false;
+
+            if (chipid != null)
+            {
+                response = await Handler.Pay(chipid, amount);
+            }
+
+           
+
+            else
+            {
+                 response = "intast venligtst chipid";
+            }
 
             if (response.ToLower().Contains("betalt"))
             {
-
                 sycseeded = true;
             }
+
+            IsRunning = false;
         }
 
         public async void callADD()
         {
             IsRunning = true;
-            response = await Handler.ADDMoney(chipid, amount);
+            if (chipid != null)
+            {
+                response = await Handler.ADDMoney(chipid, amount);
+
+            }
+
+            else response = "intast venligtst chipid";
             IsRunning = false;
         }
 
         public async void calladdchip()
         {
             IsRunning = true;
-            response = await Handler.AddChip(new NFC_Chip(chipid, name));
+            if (chipid != null)
+            {
+                response = await Handler.AddChip(new NFC_Chip(chipid, name));
+            }
+
+            else response = "intast venligtst chipid";
             IsRunning = false;
         }
 

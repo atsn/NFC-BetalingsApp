@@ -27,8 +27,8 @@
                 <TextBlock x:Name="textBlock1_Copy1" Margin="240,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="74" Text="Chip"/>
             </StackPanel>
             <StackPanel Height="100" Margin="0" Orientation="Horizontal" d:LayoutOverrides="VerticalAlignment, Height, TopPosition, BottomPosition">
-                <TextBox x:Name="textBox" HorizontalAlignment="Right" Margin="20,0,0,0" TextWrapping="Wrap" Text="{Binding amount, Mode=TwoWay}" Width="400" FontSize="72" PlaceholderText="Navn" d:LayoutOverrides="VerticalAlignment"/>
-                <TextBox x:Name="textBox1" Margin="100,0,0,0" TextWrapping="Wrap" Text="{Binding chipid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="72" PlaceholderText="Chip" InputScope="Default" d:LayoutOverrides="VerticalAlignment" Width="400"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Right" Margin="20,0,0,0" TextWrapping="Wrap" Text="{Binding amount, Mode=TwoWay}" Width="400" FontSize="50" PlaceholderText="Navn" d:LayoutOverrides="VerticalAlignment"/>
+                <TextBox x:Name="textBox1" Margin="100,0,0,0" TextWrapping="Wrap" Text="{Binding chipid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="50" PlaceholderText="Chip" InputScope="Default" d:LayoutOverrides="VerticalAlignment" Width="400"/>
                 <Button x:Name="button" Content="Add Amount" HorizontalAlignment="Right" Margin="100,0,0,0" VerticalAlignment="Stretch" FontSize="50" d:LayoutOverrides="VerticalAlignment">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">

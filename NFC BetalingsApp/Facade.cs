@@ -51,7 +51,7 @@ namespace NFC_BetalingsApp
         /// <param name="obj"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<T> GetAsync<T>(T obj, int id) where T : IWebUri, new()
+        public static async Task<T> GetAsync<T>(T obj, string id) where T : IWebUri, new()
         {
             T result = new T();
             var handler = new HttpClientHandler { UseDefaultCredentials = true };
@@ -119,7 +119,7 @@ namespace NFC_BetalingsApp
         /// <param name="obj"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<string> PutAsync<T>(T obj, int id) where T : IWebUri
+        public static async Task<string> PutAsync<T>(T obj, string id) where T : IWebUri
         {
             var handler = new HttpClientHandler { UseDefaultCredentials = true };
             using (var client = new HttpClient(handler))
@@ -148,7 +148,7 @@ namespace NFC_BetalingsApp
         /// <param name="obj"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static async Task<string> DeleteAsync<T>(T obj, int id) where T : IWebUri
+        public static async Task<string> DeleteAsync<T>(T obj, string id) where T : IWebUri
         {
             var handler = new HttpClientHandler { UseDefaultCredentials = true };
             using (var client = new HttpClient(handler))
