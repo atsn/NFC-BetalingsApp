@@ -73,6 +73,5 @@
         </StackPanel>
         <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,4" Grid.Row="1" Grid.Column="1" IsActive="{Binding IsRunning}" Width="200" Height="200"/>
 
-
     </Grid>
 </Page>

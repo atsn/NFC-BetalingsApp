@@ -26,5 +26,7 @@ namespace NFC_BetalingsApp
         {
             this.InitializeComponent();
         }
+
+       
     }
 }

@@ -7,6 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using StatueApp.Common;
+using System.Threading;
+using Windows.Media.Streaming.Adaptive;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Controls;
 
 namespace NFC_BetalingsApp
 {
@@ -17,6 +21,14 @@ namespace NFC_BetalingsApp
         private int _chipid;
         private string _name;
         private bool _isRunning;
+        public MediaElement Chaching = new MediaElement();
+
+
+        public bool sycseeded
+        {
+            get { return _sycseeded; }
+            set { _sycseeded = value; OnPropertyChanged(); }
+        }
 
         public ObservableCollection<NFC_Chip> Chips
         {
@@ -33,6 +45,7 @@ namespace NFC_BetalingsApp
 
         private NFC_Chip _selectetChip;
         private ObservableCollection<NFC_Chip> _chips;
+        private bool _sycseeded;
 
 
         public RelayCommand addcommand { get; }
@@ -49,6 +62,7 @@ namespace NFC_BetalingsApp
             AddchipCommand = new RelayCommand(calladdchip);
             GetAllChipsCommand = new RelayCommand(callGetAllChips);
             DeleteChipCommand = new RelayCommand(callDeleteChip);
+
         }
 
 
@@ -87,6 +101,12 @@ namespace NFC_BetalingsApp
             IsRunning = true;
             response = await Handler.Pay(chipid, amount);
             IsRunning = false;
+
+            if (response.ToLower().Contains("betalt"))
+            {
+
+                sycseeded = true;
+            }
         }
 
         public async void callADD()
