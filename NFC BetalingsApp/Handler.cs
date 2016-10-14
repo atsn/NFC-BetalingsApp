@@ -14,6 +14,11 @@ namespace NFC_BetalingsApp
 
         public static async Task<string> Pay(string Chipid, int amount)
         {
+            KøbsHistorik købs = new KøbsHistorik();
+
+            købs.Fk_Chipid = Chipid;
+            købs.Amount = amount;
+            
             IEnumerable<NFC_Chip> Chips = null;
             try
             {
@@ -32,12 +37,13 @@ namespace NFC_BetalingsApp
             {
                 if (String.Equals(chip.Chipid, Chipid, StringComparison.Ordinal))
                 {
-                    if (chip.Konto >= amount)
+                    if (chip.Konto >= amount && amount>=0)
                     {
                         chip.Konto = chip.Konto - amount;
                         try
                         {
                             await Facade.PutAsync(chip, chip.Chipid);
+                            await Facade.PostAsync(købs);
                         }
                         catch (Exception e)
                         {
@@ -50,9 +56,14 @@ namespace NFC_BetalingsApp
                         return "Betalt: " + amount + "Konto: " + chip.Konto;
                     }
 
-                    return "Ikke nok penge penge på chippen: " + chip.Konto;
+                    else
+                    {
+                        return "Ikke nok penge penge på chippen: " + chip.Konto;
+                    }
+                    
 
                 }
+               
             }
             return "Chippen findes ikke";
         }
@@ -162,7 +173,13 @@ namespace NFC_BetalingsApp
 
             try
             {
+                var købshstorik = await Facade.GetListAsync(new KøbsHistorik());
+                foreach (var købsHistorik in købshstorik)
+                {
+                    if (købsHistorik.Fk_Chipid == chip.Chipid) await Facade.DeleteWithIntAsync(købsHistorik, købsHistorik.Id);
+                }
                 await Facade.DeleteAsync(chip, chip.Chipid);
+
             }
             catch (Exception e)
             {
@@ -174,5 +191,31 @@ namespace NFC_BetalingsApp
             return "Chippen slettet i databasen";
 
         }
+
+        public static async Task<ObservableCollection<KøbsHistorik>> GetKøbshistorik()
+        {
+            try
+            {
+                var Chips = await Facade.GetListAsync(new KøbsHistorik());
+
+                ObservableCollection<KøbsHistorik> returnchips = new ObservableCollection<KøbsHistorik>();
+                foreach (var chip in Chips)
+                {
+                    chip.Fk_Chipid = chip.Fk_Chipid.Trim();
+                    returnchips.Add(chip);
+                }
+
+                return returnchips;
+            }
+            catch (Exception e)
+            {
+
+                var messageBox = new MessageDialog("Kan ikke forbinde til Databasen" + e.Message);
+                await messageBox.ShowAsync();
+                return null;
+            }
+        }
+
+
     }
 }

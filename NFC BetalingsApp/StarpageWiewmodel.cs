@@ -23,6 +23,20 @@ namespace NFC_BetalingsApp
         private bool _isRunning;
         public MediaElement Chaching = new MediaElement();
 
+        public ObservableCollection<KøbshistoriksVisninsApp> KøbsVis
+        {
+            get { return _købsVis; }
+            set { _købsVis = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<KøbsHistorik> KøbsHistoriks
+      
+        {
+            get { return _købsHistoriks; }
+            set
+            {_købsHistoriks = value; OnPropertyChanged();}
+        }
+
 
         public bool sycseeded
         {
@@ -46,6 +60,8 @@ namespace NFC_BetalingsApp
         private NFC_Chip _selectetChip;
         private ObservableCollection<NFC_Chip> _chips;
         private bool _sycseeded;
+        private ObservableCollection<KøbsHistorik> _købsHistoriks;
+        private ObservableCollection<KøbshistoriksVisninsApp> _købsVis;
 
 
         public RelayCommand addcommand { get; }
@@ -53,16 +69,19 @@ namespace NFC_BetalingsApp
         public RelayCommand AddchipCommand { get; }
         public RelayCommand GetAllChipsCommand { get; }
         public RelayCommand DeleteChipCommand { get; }
+        public RelayCommand Getkøbshistorik { get; }
 
         public StarpageWiewmodel()
         {
             Chips = new ObservableCollection<NFC_Chip>();
+            KøbsHistoriks = new ObservableCollection<KøbsHistorik>();
             addcommand = new RelayCommand(callADD);
             paycommand = new RelayCommand(callpay);
             AddchipCommand = new RelayCommand(calladdchip);
             GetAllChipsCommand = new RelayCommand(callGetAllChips);
             DeleteChipCommand = new RelayCommand(callDeleteChip);
-
+            KøbsVis = new ObservableCollection<KøbshistoriksVisninsApp>();
+            Getkøbshistorik = new RelayCommand(callGetKøbhistorik);
         }
 
 
@@ -170,6 +189,24 @@ namespace NFC_BetalingsApp
             IsRunning = false;
 
 
+        }
+
+        public async void callGetKøbhistorik()
+        {
+            IsRunning = true;
+            Chips = await Handler.GetAllChips();
+            KøbsHistoriks = await Handler.GetKøbshistorik();
+
+
+            var Liste = from h in KøbsHistoriks join C in Chips on h.Fk_Chipid equals C.Chipid select new {h, C.Name};
+
+            foreach (var VARIABLE in Liste)
+            {
+                KøbsVis.Add(new KøbshistoriksVisninsApp(VARIABLE.h.Id, VARIABLE.h.Amount, VARIABLE.h.Fk_Chipid,
+                    VARIABLE.Name));
+            }
+            
+            IsRunning = false;
         }
 
 

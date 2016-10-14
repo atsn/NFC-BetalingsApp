@@ -169,5 +169,27 @@ namespace NFC_BetalingsApp
                 }
             }
         }
+
+        public static async Task<string> DeleteWithIntAsync<T>(T obj, int id) where T : IWebUri
+        {
+            var handler = new HttpClientHandler { UseDefaultCredentials = true };
+            using (var client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(ServerUrl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                try
+                {
+                    var response = await client.DeleteAsync(ApiBaseUrl + obj.ResourceUri + "/" + id);
+                    if (!response.IsSuccessStatusCode) // Hvis der er fejl, så smid Exception, ellers fortsæt
+                        throw new HttpErrorException("HTTP Fejl\n" + obj.VerboseName + ": " + response.ReasonPhrase);
+                    return "Success: " + obj.VerboseName + " Slettet";
+                }
+                catch (Exception ex)
+                {
+                    throw new ServerErrorException("Server Fejl\n" + ex.Message);
+                }
+            }
+        }
     }
 }

@@ -55,17 +55,24 @@
                         </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </Button>
-                <Button x:Name="button1_Copy1" Content="See Or Delete Chip&#xD;&#xA;" VerticalAlignment="Stretch" FontSize="40" Height="105" HorizontalAlignment="Stretch" Margin="100,0,0,0">
+                <Button x:Name="button1_Copy1" Content="See Or Delete Chip" VerticalAlignment="Stretch" FontSize="40" Height="105" HorizontalAlignment="Stretch" Margin="75,0,0,0">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">
                             <Core:NavigateToPageAction TargetPage="NFC_BetalingsApp.SeeAndDeleteChip"/>
                         </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </Button>
-                <Button x:Name="button1_Copy" Content="AddAmount" Margin="100,0,0,0" VerticalAlignment="Stretch" FontSize="40" HorizontalAlignment="Stretch">
+                <Button x:Name="button1_Copy" Content="AddAmount" Margin="75,0,0,0" VerticalAlignment="Stretch" FontSize="40" HorizontalAlignment="Stretch">
                     <Interactivity:Interaction.Behaviors>
                         <Core:EventTriggerBehavior EventName="Click">
                             <Core:NavigateToPageAction TargetPage="NFC_BetalingsApp.AddAmount"/>
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </Button>
+                <Button x:Name="button1_Copy2" Content="Købshistorik" VerticalAlignment="Stretch" FontSize="40" Height="105" HorizontalAlignment="Stretch" Margin="75,0,0,0">
+                    <Interactivity:Interaction.Behaviors>
+                        <Core:EventTriggerBehavior EventName="Click">
+                            <Core:NavigateToPageAction TargetPage="NFC_BetalingsApp.Købshistorik"/>
                         </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </Button>
