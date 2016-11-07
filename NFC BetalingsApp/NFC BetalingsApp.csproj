@@ -111,9 +111,14 @@
       <DependentUpon>Købshistorik.xaml</DependentUpon>
     </Compile>
     <Compile Include="KøbshistoriksVisninsApp.cs" />
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWievmodel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NavigationHelper.cs" />
     <Compile Include="NFC Chip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelayCommand.cs" />
@@ -154,6 +159,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Købshistorik.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

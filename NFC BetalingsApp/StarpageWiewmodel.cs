@@ -21,6 +21,19 @@ namespace NFC_BetalingsApp
         private string _chipid;
         private string _name;
         private bool _isRunning;
+
+        public string username
+        {
+            get { return _username; }
+            set { _username = value; OnPropertyChanged(); }
+        }
+
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; OnPropertyChanged();}
+        }
+
         public MediaElement Chaching = new MediaElement();
 
         public ObservableCollection<KøbshistoriksVisninsApp> KøbsVis
@@ -62,6 +75,8 @@ namespace NFC_BetalingsApp
         private bool _sycseeded;
         private ObservableCollection<KøbsHistorik> _købsHistoriks;
         private ObservableCollection<KøbshistoriksVisninsApp> _købsVis;
+        private string _username;
+        private string _password;
 
 
         public RelayCommand addcommand { get; }
@@ -209,7 +224,7 @@ namespace NFC_BetalingsApp
             IsRunning = false;
         }
 
-
+       
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -14,10 +15,10 @@ namespace NFC_BetalingsApp
     class Facade
     {
 
-       private const string ServerUrl = "http://fredagsbarchip.azurewebsites.net";
-      //  private const string ServerUrl = "http://localhost:4722/";
+        private const string ServerUrl = "https://fredagsbarchip.azurewebsites.net";
+        //  private const string ServerUrl = "http://localhost:4722/";
         private const string ApiBaseUrl = "/api/";
-
+        private static string token;
 
         public static async Task<IEnumerable<T>> GetListAsync<T>(T obj) where T : IWebUri
         {
@@ -26,6 +27,7 @@ namespace NFC_BetalingsApp
             {
                 client.BaseAddress = new Uri(ServerUrl);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
@@ -59,6 +61,7 @@ namespace NFC_BetalingsApp
             {
                 client.BaseAddress = new Uri(ServerUrl);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
@@ -97,6 +100,7 @@ namespace NFC_BetalingsApp
             {
                 client.BaseAddress = new Uri(ServerUrl);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
@@ -126,6 +130,7 @@ namespace NFC_BetalingsApp
             {
                 client.BaseAddress = new Uri(ServerUrl);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
@@ -155,6 +160,7 @@ namespace NFC_BetalingsApp
             {
                 client.BaseAddress = new Uri(ServerUrl);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
@@ -177,6 +183,7 @@ namespace NFC_BetalingsApp
             {
                 client.BaseAddress = new Uri(ServerUrl);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
@@ -191,5 +198,42 @@ namespace NFC_BetalingsApp
                 }
             }
         }
+
+        public static async Task<string> login(string username, string password)
+        {
+            var handler = new HttpClientHandler { UseDefaultCredentials = true };
+            using (var client = new HttpClient(handler))
+            {
+                client.BaseAddress = new Uri(ServerUrl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+                try
+                {
+                    var pairs = new List<KeyValuePair<string, string>>
+                        {
+                            new KeyValuePair<string, string>( "grant_type", "password" ),
+                            new KeyValuePair<string, string>( "userName", username ),
+                            new KeyValuePair<string, string> ( "password", password )
+                        };
+                    var content = new FormUrlEncodedContent(pairs);
+                    var response = await client.PostAsync("/token", content);
+                    if (!response.IsSuccessStatusCode) // Hvis der er fejl, så smid Exception, ellers fortsæt
+                        throw new HttpErrorException("HTTP Fejl\n" + ": " + response.ReasonPhrase);
+                    string tokensplit = await response.Content.ReadAsStringAsync();
+
+                    var splittettokenrewuest = tokensplit.Split('"');
+
+                    token = splittettokenrewuest[3];
+                    return "Success: " + "Login" + " Sucsess";
+                }
+                catch (Exception ex)
+                {
+                    throw new ServerErrorException("Server Fejl\n" + ex.Message);
+                }
+            }
+        }
+
+
     }
 }
