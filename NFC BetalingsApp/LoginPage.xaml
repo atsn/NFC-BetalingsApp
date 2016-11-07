@@ -29,8 +29,8 @@
                 <TextBlock x:Name="textBlock1_Copy1" Margin="170,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="74" Text="Password"/>
             </StackPanel>
             <StackPanel Height="100" Margin="0" Orientation="Horizontal" d:LayoutOverrides="VerticalAlignment, Height, TopPosition, BottomPosition">
-                <TextBox x:Name="textBox" HorizontalAlignment="Right" Margin="20,0,0,0" TextWrapping="Wrap" Text="{Binding Username, Mode=TwoWay}" Width="400" FontSize="50" PlaceholderText="Navn" d:LayoutOverrides="VerticalAlignment"/>
-                <TextBox x:Name="textBox1" Margin="100,0,0,0" TextWrapping="Wrap" Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="50" PlaceholderText="Chip" InputScope="Default" d:LayoutOverrides="VerticalAlignment" Width="400"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Right" Margin="20,0,0,0" TextWrapping="Wrap" Text="{Binding Username, Mode=TwoWay}" Width="400" FontSize="50" PlaceholderText="Username" d:LayoutOverrides="VerticalAlignment"/>
+                <TextBox x:Name="textBox1" Margin="100,0,0,0" TextWrapping="Wrap" Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="50" PlaceholderText="Password" InputScope="Default" d:LayoutOverrides="VerticalAlignment" Width="400"/>
                 <Button x:Name="button" Content="Login" HorizontalAlignment="Right" Margin="100,0,0,0" VerticalAlignment="Stretch" Width="400" FontSize="72" d:LayoutOverrides="VerticalAlignment">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="Click">
