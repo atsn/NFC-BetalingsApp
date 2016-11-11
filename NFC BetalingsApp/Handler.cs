@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using System.Collections.ObjectModel;
+using Windows.Storage;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace NFC_BetalingsApp
 {
@@ -53,7 +55,18 @@ namespace NFC_BetalingsApp
 
                         }
 
+                        ////Ikke Virkende Music
+                        //MediaElement PlayMusic = new MediaElement();
+                        //PlayMusic.AudioCategory = Windows.UI.Xaml.Media.AudioCategory.Media;
+
+                        //StorageFolder Folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                        //Folder = await Folder.GetFolderAsync(@"C:\Users\Ander\Documents\MEGA\Visual Studio Apps\Små Projector\NFC BetalingsApp\NFC BetalingsApp\Assets");
+                        //StorageFile sf = await Folder.GetFileAsync("Cha - Ching.mp3");
+                        //PlayMusic.SetSource(await sf.OpenAsync(FileAccessMode.Read), sf.ContentType);
+                        //PlayMusic.Play();
+
                         return "Betalt: " + amount + "Konto: " + chip.Konto;
+
                     }
 
                     else
