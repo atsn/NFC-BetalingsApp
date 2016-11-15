@@ -20,7 +20,7 @@ namespace NFC_BetalingsApp
 
             købs.Fk_Chipid = Chipid;
             købs.Amount = amount;
-            
+
             IEnumerable<NFC_Chip> Chips = null;
             try
             {
@@ -39,7 +39,7 @@ namespace NFC_BetalingsApp
             {
                 if (String.Equals(chip.Chipid, Chipid, StringComparison.Ordinal))
                 {
-                    if (chip.Konto >= amount && amount>=0)
+                    if (chip.Konto >= amount && amount >= 0)
                     {
                         chip.Konto = chip.Konto - amount;
                         try
@@ -54,16 +54,12 @@ namespace NFC_BetalingsApp
                             return null;
 
                         }
-
-                        ////Ikke Virkende Music
-                        //MediaElement PlayMusic = new MediaElement();
-                        //PlayMusic.AudioCategory = Windows.UI.Xaml.Media.AudioCategory.Media;
-
-                        //StorageFolder Folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-                        //Folder = await Folder.GetFolderAsync(@"C:\Users\Ander\Documents\MEGA\Visual Studio Apps\Små Projector\NFC BetalingsApp\NFC BetalingsApp\Assets");
-                        //StorageFile sf = await Folder.GetFileAsync("Cha - Ching.mp3");
-                        //PlayMusic.SetSource(await sf.OpenAsync(FileAccessMode.Read), sf.ContentType);
-                        //PlayMusic.Play();
+                        MediaElement PlayMusic = new MediaElement();
+                        StorageFolder Folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                        Folder = await Folder.GetFolderAsync("Assets");
+                        StorageFile sf = await Folder.GetFileAsync("Cha - Ching.mp3");
+                        PlayMusic.SetSource(await sf.OpenAsync(FileAccessMode.Read), sf.ContentType);
+                        PlayMusic.Play();
 
                         return "Betalt: " + amount + "Konto: " + chip.Konto;
 
@@ -73,10 +69,10 @@ namespace NFC_BetalingsApp
                     {
                         return "Ikke nok penge penge på chippen: " + chip.Konto;
                     }
-                    
+
 
                 }
-               
+
             }
             return "Chippen findes ikke";
         }
