@@ -45,7 +45,11 @@ namespace NFC_BetalingsApp
                         try
                         {
                             await Facade.PutAsync(chip, chip.Chipid);
-                            await Facade.PostAsync(købs);
+                            if(amount != 0)
+                            {
+                                await Facade.PostAsync(købs);
+                            }
+                            
                         }
                         catch (Exception e)
                         {
