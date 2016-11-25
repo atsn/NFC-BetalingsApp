@@ -22,6 +22,12 @@ namespace NFC_BetalingsApp
         private string _name;
         private bool _isRunning;
 
+        public int Total
+        {
+            get { return _total; }
+            set { _total = value; OnPropertyChanged(); }
+        }
+
         public string username
         {
             get { return _username; }
@@ -31,7 +37,7 @@ namespace NFC_BetalingsApp
         public string Password
         {
             get { return _password; }
-            set { _password = value; OnPropertyChanged();}
+            set { _password = value; OnPropertyChanged(); }
         }
 
         public MediaElement Chaching = new MediaElement();
@@ -43,11 +49,11 @@ namespace NFC_BetalingsApp
         }
 
         public ObservableCollection<KøbsHistorik> KøbsHistoriks
-      
+
         {
             get { return _købsHistoriks; }
             set
-            {_købsHistoriks = value; OnPropertyChanged();}
+            { _købsHistoriks = value; OnPropertyChanged(); }
         }
 
 
@@ -77,6 +83,7 @@ namespace NFC_BetalingsApp
         private ObservableCollection<KøbshistoriksVisninsApp> _købsVis;
         private string _username;
         private string _password;
+        private int _total;
 
 
         public RelayCommand addcommand { get; }
@@ -85,6 +92,7 @@ namespace NFC_BetalingsApp
         public RelayCommand GetAllChipsCommand { get; }
         public RelayCommand DeleteChipCommand { get; }
         public RelayCommand Getkøbshistorik { get; }
+
 
         public StarpageWiewmodel()
         {
@@ -140,11 +148,11 @@ namespace NFC_BetalingsApp
                 response = await Handler.Pay(chipid, amount);
             }
 
-           
+
 
             else
             {
-                 response = "intast venligtst chipid";
+                response = "intast venligtst chipid";
             }
 
             if (response.ToLower().Contains("betalt"))
@@ -213,18 +221,24 @@ namespace NFC_BetalingsApp
             KøbsHistoriks = await Handler.GetKøbshistorik();
 
 
-            var Liste = from h in KøbsHistoriks join C in Chips on h.Fk_Chipid equals C.Chipid select new {h, C.Name};
+            var Liste = from h in KøbsHistoriks join C in Chips on h.Fk_Chipid equals C.Chipid select new { h, C.Name };
+            Total = 0;
 
             foreach (var VARIABLE in Liste)
             {
                 KøbsVis.Add(new KøbshistoriksVisninsApp(VARIABLE.h.Id, VARIABLE.h.Amount, VARIABLE.h.Fk_Chipid,
                     VARIABLE.Name));
+                if (VARIABLE.Name != "Underviser")
+                {
+                    Total = Total + VARIABLE.h.Amount;
+                }
             }
-            
+
+
             IsRunning = false;
         }
 
-       
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
