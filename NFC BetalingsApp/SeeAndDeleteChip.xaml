@@ -28,13 +28,7 @@
         <StackPanel Grid.Column="1" Margin="0,0,0,100" Grid.Row="1" BorderThickness="0,-5,0,0" Orientation="Horizontal">
             <ListView x:Name="listView" MinWidth="1000" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectedItem="{Binding selectetChip, Mode=TwoWay}" ItemsSource="{Binding Chips}"/>
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0">
-                <Button x:Name="button" Content="DeleteSelectedChip" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="40" Margin="0">
-                    <interactivity:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Click">
-                            <core:InvokeCommandAction Command="{Binding DeleteChipCommand}"/>
-                        </core:EventTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </Button>
+               <TextBlock Text="{Binding Total}" FontSize="40" />
                 <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="{Binding response, Mode=TwoWay}" FontSize="26.667" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>

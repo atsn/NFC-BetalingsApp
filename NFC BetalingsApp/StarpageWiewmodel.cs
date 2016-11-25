@@ -192,6 +192,14 @@ namespace NFC_BetalingsApp
         {
             IsRunning = true;
             Chips = await Handler.GetAllChips();
+            Total = 0;
+            foreach (var nfcChip in Chips)
+            {
+                if (nfcChip.Name != "Underviser")
+                {
+                    Total = Total + nfcChip.Konto;
+                }
+            }
             IsRunning = false;
         }
         public async void callDeleteChip()
@@ -228,10 +236,7 @@ namespace NFC_BetalingsApp
             {
                 KøbsVis.Add(new KøbshistoriksVisninsApp(VARIABLE.h.Id, VARIABLE.h.Amount, VARIABLE.h.Fk_Chipid,
                     VARIABLE.Name));
-                if (VARIABLE.Name != "Underviser")
-                {
-                    Total = Total + VARIABLE.h.Amount;
-                }
+               
             }
 
 
